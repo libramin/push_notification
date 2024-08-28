@@ -1,11 +1,10 @@
 import 'dart:io';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'main.dart';
 
 class ChaduckNotificationService {
-  // 클래스명은 앱에 맞게 임의로 지정
-
   Future<void> initializeNotification() async {
     const initializationSettingsAndroid =
     AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -24,6 +23,11 @@ class ChaduckNotificationService {
 
     await notification.initialize(
       initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse details) {
+        if (details.payload != null) {
+          print(details.payload);
+        }
+      },
     );
 
     await _requestPermissions();
